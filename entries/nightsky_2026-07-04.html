@@ -29,11 +29,22 @@
   .period{color:var(--muted);font-size:14px;margin:0}
 
   /* 밤하늘 밴드 */
-  .sky{background:linear-gradient(180deg,var(--deep) 0%,var(--deep2) 100%);
+  .sky{background:linear-gradient(180deg,#04120C 0%,#081E14 55%,#0C2A1C 100%);
     padding:30px 16px 26px}
   .sky svg{display:block;max-width:100%;height:auto;margin:0 auto}
   .sky-cap{color:var(--cream);text-align:center;font-family:"Noto Serif KR",serif;
     font-size:16px;margin:20px 0 0;opacity:.92}
+
+  /* 별 반짝임 */
+  @keyframes twinkle{0%,100%{opacity:.45}50%{opacity:1}}
+  @keyframes twinkleBig{0%,100%{opacity:.6}45%{opacity:1}}
+  .tw{animation:twinkle 3.4s ease-in-out infinite}
+  .tw2{animation:twinkle 4.6s ease-in-out infinite}
+  .tw3{animation:twinkle 2.6s ease-in-out infinite}
+  .hero .glow{animation:twinkleBig 3.8s ease-in-out infinite}
+  @media (prefers-reduced-motion:reduce){
+    .tw,.tw2,.tw3,.hero .glow{animation:none}
+  }
 
   /* 본문 섹션 */
   section{padding:26px 22px}
@@ -87,51 +98,106 @@
   </header>
 
   <div class="sky">
-    <svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="이번 주 별자리">
-      <!-- 배경 잔별 -->
-      <g fill="#FBF7EE" opacity="0.28">
-        <circle cx="45" cy="55" r="1.1"/><circle cx="120" cy="95" r="0.9"/>
-        <circle cx="205" cy="45" r="1.2"/><circle cx="300" cy="100" r="0.8"/>
-        <circle cx="390" cy="55" r="1.1"/><circle cx="470" cy="80" r="0.9"/>
-        <circle cx="560" cy="55" r="1.2"/><circle cx="615" cy="100" r="0.9"/>
-        <circle cx="70" cy="250" r="0.9"/><circle cx="160" cy="290" r="1.1"/>
-        <circle cx="250" cy="270" r="0.8"/><circle cx="360" cy="285" r="1.0"/>
-        <circle cx="440" cy="265" r="0.9"/><circle cx="530" cy="285" r="1.1"/>
-        <circle cx="600" cy="255" r="0.9"/><circle cx="25" cy="160" r="0.8"/>
-        <circle cx="620" cy="180" r="1.0"/><circle cx="330" cy="30" r="0.9"/>
-        <circle cx="490" cy="150" r="0.8"/><circle cx="190" cy="180" r="0.7"/>
+    <svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="이번 주 별자리 — 북두칠성">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFF7DE" stop-opacity="0.95"/>
+          <stop offset="35%" stop-color="#E2C77B" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#E2C77B" stop-opacity="0"/>
+        </radialGradient>
+        <!-- 4각 반짝별 -->
+        <path id="spark" d="M0,-10 C1.6,-3.2 3.2,-1.6 10,0 C3.2,1.6 1.6,3.2 0,10 C-1.6,3.2 -3.2,1.6 -10,0 C-3.2,-1.6 -1.6,-3.2 0,-10 Z"/>
+        <!-- 십자 빛줄기 (밝은 별의 반짝임) -->
+        <g id="glint">
+          <path d="M0,-30 L2.4,0 L0,30 L-2.4,0 Z" fill="#FFFDF6" opacity=".7"/>
+          <path d="M-30,0 L0,2.4 L30,0 L0,-2.4 Z" fill="#FFFDF6" opacity=".7"/>
+          <path d="M0,-13 L1,0 L0,13 L-1,0 Z" transform="rotate(45)" fill="#FFF3D2" opacity=".38"/>
+          <path d="M-13,0 L0,1 L13,0 L0,-1 Z" transform="rotate(45)" fill="#FFF3D2" opacity=".38"/>
+        </g>
+        <!-- 성운 빛 -->
+        <radialGradient id="nebula" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#8FD6B0" stop-opacity=".22"/>
+          <stop offset="60%" stop-color="#4FA378" stop-opacity=".08"/>
+          <stop offset="100%" stop-color="#4FA378" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- 성운 (별 뒤 은은한 빛무리) -->
+      <ellipse cx="310" cy="70" rx="220" ry="120" fill="url(#nebula)"/>
+      <ellipse cx="150" cy="230" rx="150" ry="95" fill="url(#nebula)" opacity=".7"/>
+      <ellipse cx="500" cy="215" rx="140" ry="90" fill="url(#nebula)" opacity=".6"/>
+
+      <!-- 배경 잔별 (일부 깜빡임) -->
+      <g fill="#FBF7EE">
+        <use href="#spark" transform="translate(48,58) scale(.28)" opacity=".5" class="tw"/>
+        <circle cx="120" cy="95" r=".9" opacity=".3"/>
+        <use href="#spark" transform="translate(205,46) scale(.22)" opacity=".45" class="tw2"/>
+        <circle cx="300" cy="100" r=".8" opacity=".28"/>
+        <circle cx="392" cy="52" r="1.1" opacity=".3" class="tw3"/>
+        <use href="#spark" transform="translate(472,80) scale(.24)" opacity=".4" class="tw"/>
+        <circle cx="560" cy="52" r="1.2" opacity=".3"/>
+        <use href="#spark" transform="translate(614,104) scale(.22)" opacity=".45" class="tw2"/>
+        <circle cx="70" cy="266" r=".9" opacity=".28"/>
+        <use href="#spark" transform="translate(162,300) scale(.24)" opacity=".4" class="tw3"/>
+        <circle cx="250" cy="286" r=".8" opacity=".26"/>
+        <circle cx="360" cy="300" r="1" opacity=".3" class="tw"/>
+        <use href="#spark" transform="translate(452,282) scale(.22)" opacity=".4" class="tw2"/>
+        <circle cx="536" cy="300" r="1.1" opacity=".3"/>
+        <circle cx="606" cy="270" r=".9" opacity=".28" class="tw3"/>
+        <circle cx="25" cy="170" r=".8" opacity=".26"/>
+        <use href="#spark" transform="translate(620,192) scale(.22)" opacity=".4" class="tw"/>
+        <circle cx="500" cy="158" r=".8" opacity=".26"/>
+        <use href="#spark" transform="translate(150,110) scale(.2)" opacity=".38" class="tw2"/>
       </g>
 
       <!-- 북극성 (의미의 축) -->
-      <circle cx="320" cy="42" r="8" fill="#FBF7EE"/>
-      <circle cx="320" cy="42" r="8" fill="#E2C77B" opacity="0.5"/>
-      <text x="320" y="70" fill="#FBF7EE" font-family="'Noto Serif KR',serif" font-size="12.5" text-anchor="middle" opacity="0.9">사랑으로 의도한 것만이 진짜로 태어난다</text>
+      <circle cx="320" cy="46" r="27" fill="url(#glow)" class="glow"/>
+      <use href="#glint" transform="translate(320,46) scale(1.25)" class="tw"/>
+      <use href="#spark" transform="translate(320,46) scale(1.35)" fill="#FFFDF6" class="tw2"/>
+      <text x="320" y="82" fill="#FBF7EE" font-family="'Noto Serif KR',serif" font-size="12.5" text-anchor="middle" opacity=".9">사랑으로 의도한 것만이 진짜로 태어난다</text>
 
-      <!-- 이번 주 별들을 잇는 선 -->
-      <polyline points="80,155 150,225 250,120 330,215 430,130 520,210 600,140"
-        fill="none" stroke="#E2C77B" stroke-width="1" opacity="0.28"/>
+      <!-- 국자 끝이 북극성을 가리키는 포인터 -->
+      <line x1="430" y1="120" x2="332" y2="58" stroke="#E2C77B" stroke-width="1" stroke-dasharray="2 5" opacity=".35"/>
 
-      <!-- 씨앗 별 7 -->
-      <g fill="#E2C77B">
-        <circle cx="80"  cy="155" r="5.5"/>
-        <circle cx="150" cy="225" r="4"/>
-        <circle cx="250" cy="120" r="5"/>
-        <circle cx="330" cy="215" r="4.5"/>
-        <circle cx="430" cy="130" r="5.5"/>
-        <circle cx="520" cy="210" r="4.5"/>
-        <circle cx="600" cy="140" r="4"/>
+      <!-- 북두칠성 잇는 선 (자루→국자, 국자 닫힘) -->
+      <polyline points="90,120 175,165 265,180 350,175 430,120 455,210 360,235 350,175"
+        fill="none" stroke="#E2C77B" stroke-width="1.2" opacity=".4" stroke-linejoin="round"/>
+
+      <!-- 나머지 씨앗 별 9 (별자리 곁에 함께 뜬 빛) -->
+      <g>
+        <g transform="translate(52,82)"><use href="#spark" transform="scale(.5)" fill="#E2C77B" opacity=".9" class="tw"/><circle r="1.1" fill="#FFFDF6"/></g>
+        <g transform="translate(255,268)"><use href="#spark" transform="scale(.55)" fill="#E2C77B" opacity=".9" class="tw2"/><circle r="1.2" fill="#FFFDF6"/></g>
+        <g transform="translate(392,280)"><use href="#spark" transform="scale(.5)" fill="#E2C77B" opacity=".9" class="tw3"/><circle r="1.1" fill="#FFFDF6"/></g>
+        <g transform="translate(558,72)"><use href="#spark" transform="scale(.55)" fill="#E2C77B" opacity=".9" class="tw"/><circle r="1.2" fill="#FFFDF6"/></g>
+        <g transform="translate(612,124)"><use href="#spark" transform="scale(.5)" fill="#E2C77B" opacity=".9" class="tw2"/><circle r="1.1" fill="#FFFDF6"/></g>
+        <g transform="translate(38,206)"><use href="#spark" transform="scale(.5)" fill="#E2C77B" opacity=".9" class="tw3"/><circle r="1.1" fill="#FFFDF6"/></g>
+        <g transform="translate(616,222)"><use href="#spark" transform="scale(.55)" fill="#E2C77B" opacity=".9" class="tw"/><circle r="1.2" fill="#FFFDF6"/></g>
+        <g transform="translate(120,284)"><use href="#spark" transform="scale(.5)" fill="#E2C77B" opacity=".9" class="tw2"/><circle r="1.1" fill="#FFFDF6"/></g>
+        <g transform="translate(528,272)"><use href="#spark" transform="scale(.5)" fill="#E2C77B" opacity=".9" class="tw3"/><circle r="1.1" fill="#FFFDF6"/></g>
       </g>
+
+      <!-- 씨앗 별 7 (북두칠성) -->
+      <g class="hero">
+        <g transform="translate(90,120)"><circle r="17" fill="url(#glow)" class="glow"/><use href="#glint" transform="scale(.9)" class="tw"/><use href="#spark" transform="scale(1.15)" fill="#FFFDF6" class="tw"/></g>
+        <g transform="translate(175,165)"><circle r="13" fill="url(#glow)" class="glow"/><use href="#spark" transform="scale(.9)" fill="#FFFDF6" class="tw2"/></g>
+        <g transform="translate(265,180)"><circle r="15" fill="url(#glow)" class="glow"/><use href="#spark" transform="scale(1.05)" fill="#FFFDF6" class="tw3"/></g>
+        <g transform="translate(350,175)"><circle r="13" fill="url(#glow)" class="glow"/><use href="#spark" transform="scale(.9)" fill="#FFFDF6" class="tw"/></g>
+        <g transform="translate(430,120)"><circle r="17" fill="url(#glow)" class="glow"/><use href="#glint" transform="scale(.9)" class="tw2"/><use href="#spark" transform="scale(1.15)" fill="#FFFDF6" class="tw2"/></g>
+        <g transform="translate(455,210)"><circle r="14" fill="url(#glow)" class="glow"/><use href="#spark" transform="scale(1)" fill="#FFFDF6" class="tw3"/></g>
+        <g transform="translate(360,235)"><circle r="13" fill="url(#glow)" class="glow"/><use href="#spark" transform="scale(.9)" fill="#FFFDF6" class="tw"/></g>
+      </g>
+
       <g fill="#FBF7EE" font-family="'Noto Sans KR',sans-serif" font-size="12.5" text-anchor="middle">
-        <text x="80"  y="140">원석</text>
-        <text x="150" y="245">동지</text>
-        <text x="250" y="105">첫만남</text>
-        <text x="330" y="235">나눔</text>
-        <text x="430" y="115">자신감</text>
-        <text x="520" y="230">문체</text>
-        <text x="600" y="125">태도</text>
+        <text x="90"  y="101">원석</text>
+        <text x="175" y="148">동지</text>
+        <text x="265" y="203">첫만남</text>
+        <text x="350" y="158">나눔</text>
+        <text x="430" y="101">자신감</text>
+        <text x="480" y="216">문체</text>
+        <text x="360" y="258">태도</text>
       </g>
     </svg>
-    <p class="sky-cap">이번 주, 별 16개가 떴습니다 · 일곱을 하늘에, 나머지는 아래에</p>
+    <p class="sky-cap">이번 주, 별 16개가 모두 하늘에 떴습니다 · 일곱은 별자리로, 아홉은 그 곁에</p>
   </div>
 
   <!-- 씨앗 카드 -->
