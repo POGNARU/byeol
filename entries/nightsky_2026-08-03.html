@@ -39,6 +39,19 @@
   .row.blank .name{color:#A8967E;font-weight:400}
   .row.veil{background:#FCF6E8;border-color:#EBDCBE}
   .row.veil .line b{color:#6E5A42;font-weight:500}
+  @keyframes twinkle{0%,100%{opacity:.45}50%{opacity:1}}
+  @keyframes twinkleBig{0%,100%{opacity:.6}45%{opacity:1}}
+  .tw{animation:twinkle 3.4s ease-in-out infinite}
+  .tw2{animation:twinkle 4.6s ease-in-out infinite}
+  .tw3{animation:twinkle 2.6s ease-in-out infinite}
+  .glow{animation:twinkleBig 3.8s ease-in-out infinite}
+  @media (prefers-reduced-motion:reduce){.tw,.tw2,.tw3,.glow{animation:none}}
+  .seedcard{background:#fff;border:1px solid #F0E4CE;border-radius:14px;
+    padding:20px 22px;margin:12px 0;box-shadow:0 1px 3px rgba(120,90,50,.05)}
+  .seedcard .star{color:#D9B25E;font-size:15px}
+  .seedcard .seed{font-family:'Noto Serif KR',serif;font-size:17.5px;line-height:1.72;
+    color:#2E2114;margin-top:6px;font-weight:500}
+  .seedcard .meta{font-size:11.5px;color:#B0997E;margin-top:11px;letter-spacing:.02em}
   .steps{margin-top:8px}
   .steps .lab{text-align:center;font-size:12.5px;color:#8A7A66;margin-top:20px}
   .dots{display:flex;gap:11px;justify-content:center;margin-top:11px}
@@ -73,25 +86,75 @@
 
   <div class="sky">
     <svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" role="img"
-         aria-label="별이 하나도 뜨지 않은 어두운 밤하늘">
+         aria-label="나흘은 별이 없고, 주 끝에 별 넷이 돋은 밤하늘">
       <defs>
         <radialGradient id="cloud" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stop-color="#1B3A29" stop-opacity=".55"/>
           <stop offset="60%" stop-color="#123021" stop-opacity=".22"/>
           <stop offset="100%" stop-color="#0C2418" stop-opacity="0"/>
         </radialGradient>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFF7DE" stop-opacity="0.95"/>
+          <stop offset="35%" stop-color="#E2C77B" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#E2C77B" stop-opacity="0"/>
+        </radialGradient>
+        <path id="spark" d="M0,-10 C1.6,-3.2 3.2,-1.6 10,0 C3.2,1.6 1.6,3.2 0,10 C-1.6,3.2 -3.2,1.6 -10,0 C-3.2,-1.6 -1.6,-3.2 0,-10 Z"/>
+        <g id="glint">
+          <path d="M0,-30 L2.4,0 L0,30 L-2.4,0 Z" fill="#FFFDF6" opacity=".7"/>
+          <path d="M-30,0 L0,2.4 L30,0 L0,-2.4 Z" fill="#FFFDF6" opacity=".7"/>
+        </g>
       </defs>
+
       <ellipse cx="300" cy="196" rx="290" ry="150" fill="url(#cloud)"/>
       <ellipse cx="470" cy="232" rx="180" ry="108" fill="url(#cloud)" opacity=".7"/>
       <ellipse cx="140" cy="250" rx="170" ry="96" fill="url(#cloud)" opacity=".6"/>
+
+      <polyline points="390,252 452,214 512,172 566,126" fill="none" stroke="#E2C77B" stroke-width="1.2" opacity=".38" stroke-linejoin="round"/>
+
+      <g transform="translate(390,252)"><circle r="10" fill="url(#glow)" class="glow"/><use href="#spark" transform="scale(.7)" fill="#FFFDF6" class="tw"/></g>
+      <g transform="translate(452,214)"><circle r="8.7" fill="url(#glow)" class="glow"/><use href="#spark" transform="scale(.6)" fill="#FFFDF6" class="tw2"/></g>
+      <g transform="translate(512,172)"><circle r="11.5" fill="url(#glow)" class="glow"/><use href="#glint" transform="scale(.6)" class="tw"/><use href="#spark" transform="scale(.77)" fill="#FFFDF6" class="tw3"/></g>
+      <g transform="translate(566,126)"><circle r="10" fill="url(#glow)" class="glow"/><use href="#spark" transform="scale(.7)" fill="#FFFDF6" class="tw2"/></g>
+
+      <text x="390" y="276" fill="#FBF7EE" font-family="'Noto Sans KR',sans-serif" font-size="12.5" text-anchor="middle">그냥</text>
+      <text x="452" y="196" fill="#FBF7EE" font-family="'Noto Sans KR',sans-serif" font-size="12.5" text-anchor="middle">다정</text>
+      <text x="512" y="196" fill="#FBF7EE" font-family="'Noto Sans KR',sans-serif" font-size="12.5" text-anchor="middle">변함없음</text>
+      <text x="566" y="106" fill="#FBF7EE" font-family="'Noto Sans KR',sans-serif" font-size="12.5" text-anchor="middle">떠날 힘</text>
     </svg>
     <div class="caption">
-      이번 주, 별은 뜨지 않았습니다.
-      <small>씨앗 0 · 오아시스 0 · 여정 0 — 하늘은 어두운 채로 있었습니다</small>
+      나흘은 별 없이, 끝의 이틀에 넷.
+      <small>이 주의 씨앗 다섯 중 넷을 여기 띄웁니다 · 오아시스 0 · 여정 0</small>
     </div>
   </div>
 
   <div class="body">
+
+    <div class="sec-label">이번 주의 씨앗</div>
+    <div class="sec-sub">주 끝의 이틀에서 넷</div>
+
+    <div class="seedcard">
+      <span class="star">✦</span>
+      <div class="seed">"왜? 왜 주는 건데?" — "그냥."</div>
+      <div class="meta">8월 1일 토요일 · 사랑에는 이유를 대지 않는다</div>
+    </div>
+
+    <div class="seedcard">
+      <span class="star">✦</span>
+      <div class="seed">여전히 나를 걱정하는 분들이 계신다.</div>
+      <div class="meta">8월 1일 토요일 · 다정에는 자격 심사가 없다</div>
+    </div>
+
+    <div class="seedcard">
+      <span class="star">✦</span>
+      <div class="seed">바다는 파도가 일렁일지언정 언제나 그곳에 있다. 변함없는 자리에 그대로.</div>
+      <div class="meta">8월 2일 일요일 · 내가 구한 건 위로가 아니라 변함없음이었다</div>
+    </div>
+
+    <div class="seedcard">
+      <span class="star">✦</span>
+      <div class="seed">바다를 보고 있노라니 내가 운전할 수 있는 사실이 새삼 감사했다.</div>
+      <div class="meta">8월 2일 일요일 · 없는 것을 세던 며칠 끝에, 있는 것 하나를 셌다</div>
+    </div>
 
     <div class="sec-label">그 주의 기록</div>
     <div class="sec-sub">별이 되지 못한 날들도 남겨 둡니다</div>
@@ -147,9 +210,10 @@
     <p class="pull">바다는 파도가 일렁일지언정<br>언제나 그곳에 있다.<br>변함없는 자리에 그대로.<span class="who">— 8월 2일 일요일 새벽에</span></p>
 
     <div class="dedication">
-      <p>파도 없는 날의 바다도 바다였습니다.<br>
-         별 하나 뜨지 않은 이 하늘도, 하늘입니다.<br>
-         이번 주는 이대로 둡니다.</p>
+      <p>나흘 내내 하늘은 비어 있었습니다.<br>
+         그러다 '그냥.' 두 글자에서 첫 별이 돋았습니다.<br>
+         파도 없는 날의 바다도 바다였듯이,<br>
+         늦게 뜬 별도 별입니다.</p>
       <div class="fox">🦊</div>
     </div>
 
